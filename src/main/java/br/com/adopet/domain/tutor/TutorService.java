@@ -44,6 +44,12 @@ public class TutorService {
         return tutorDetalhado(novoTutor);
     }
 
+    public DadosDetalhamentoTutor detalhar(Long id) {
+        var tutor = _tutorRepository.getReferenceById(id);
+
+        return tutorDetalhado(tutor);
+    }
+
     private DadosDetalhamentoTutor tutorDetalhado(Tutor tutor){
         return new DadosDetalhamentoTutor(
                 tutor.getId(),

@@ -26,7 +26,7 @@ public class TratadorDeErros {
     public ResponseEntity<String> tratarErroRegraDeNegocio(ValidacaoException exception){
         return ResponseEntity.badRequest().body(exception.getMessage());
     }
-
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<List<DadosErroValidacao>> tratarErro400(MethodArgumentNotValidException exception){
         var erros = exception.getFieldErrors();
 
