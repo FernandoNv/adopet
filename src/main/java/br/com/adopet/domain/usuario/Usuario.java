@@ -32,9 +32,15 @@ public class Usuario {
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     private Tutor tutor;
 
+    private boolean ativo;
+
     public Usuario(Long id, String email, String senha) {
         this.id = id;
         this.email = email;
         this.senha = senha;
+    }
+
+    public void deletar() {
+        ativo = false;
     }
 }

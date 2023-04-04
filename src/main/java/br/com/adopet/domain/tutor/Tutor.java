@@ -35,9 +35,16 @@ public class Tutor {
     private String telefone;
     private String cidade;
     private String sobre;
+    private boolean ativo;
 
     public Tutor(Long id, String nome) {
         this.id = id;
         this.nome = nome;
+    }
+
+    public void deletar() {
+        ativo = false;
+
+        usuario.deletar();
     }
 }

@@ -1,5 +1,6 @@
 package br.com.adopet.domain.tutor;
 
+import br.com.adopet.domain.ValidacaoException;
 import br.com.adopet.domain.tutor.validadores.cadastro.ValidadorCadastroTutor;
 import br.com.adopet.domain.usuario.Usuario;
 import br.com.adopet.domain.usuario.UsuarioRepository;
@@ -43,27 +44,23 @@ public class TutorService {
         _usuarioRepository.save(usuario);
         var novoTutor = _tutorRepository.save(tutor);
 
-        return tutorDetalhado(novoTutor);
+        return new DadosDetalhamentoTutor(novoTutor);
     }
 
     public DadosDetalhamentoTutor detalhar(Long id) {
+        if(!_tutorRepository.findAtivoById(id)) throw new ValidacaoException("Conta desativada");
         var tutor = _tutorRepository.getReferenceById(id);
 
-        return tutorDetalhado(tutor);
-    }
-
-    private DadosDetalhamentoTutor tutorDetalhado(Tutor tutor){
-        return new DadosDetalhamentoTutor(
-                tutor.getId(),
-                tutor.getFoto(),
-                tutor.getNome(),
-                tutor.getTelefone(),
-                tutor.getCidade(),
-                tutor.getSobre()
-        );
+        return new DadosDetalhamentoTutor(tutor);
     }
 
     public Page<DadosDetalhamentoTutor> listar(Pageable paginacao) {
-        return _tutorRepository.findAll(paginacao).map(this::tutorDetalhado);
+        return _tutorRepository.findAllByAtivoTrue(paginacao).map(DadosDetalhamentoTutor::new);
+    }
+
+    @Transactional
+    public void deletar(Long id) {
+        Tutor tutor = _tutorRepository.getReferenceById(id);
+        tutor.deletar();
     }
 }
