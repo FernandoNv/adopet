@@ -5,6 +5,8 @@ import br.com.adopet.domain.usuario.Usuario;
 import br.com.adopet.domain.usuario.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -59,5 +61,9 @@ public class TutorService {
                 tutor.getCidade(),
                 tutor.getSobre()
         );
+    }
+
+    public Page<DadosDetalhamentoTutor> listar(Pageable paginacao) {
+        return _tutorRepository.findAll(paginacao).map(this::tutorDetalhado);
     }
 }

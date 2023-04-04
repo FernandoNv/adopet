@@ -5,6 +5,9 @@ import br.com.adopet.domain.tutor.DadosDetalhamentoTutor;
 import br.com.adopet.domain.tutor.TutorService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,10 +39,18 @@ public class TutorController {
 
         return ResponseEntity.created(uri).body(dadosDetalhamentoTutor);
     }
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<DadosDetalhamentoTutor> detalhar(@PathVariable Long id){
         DadosDetalhamentoTutor dadosDetalhamentoTutor = _tutorService.detalhar(id);
 
-        return ResponseEntity.ok().body(dadosDetalhamentoTutor);
+        return ResponseEntity.ok(dadosDetalhamentoTutor);
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<DadosDetalhamentoTutor>> listar(@PageableDefault(sort = {"nome"}) Pageable paginacao){
+        Page<DadosDetalhamentoTutor> page = _tutorService.listar(paginacao);
+
+        return ResponseEntity.ok(page);
     }
 }
