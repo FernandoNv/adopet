@@ -47,4 +47,28 @@ public class Tutor {
 
         usuario.deletar();
     }
+
+    public void atualiza(DadosAtualizacaoTutor dados) {
+        if(dados.nome() != null){
+            nome = dados.nome();
+        }
+
+        if(dados.cidade() != null){
+            cidade = dados.cidade();
+        }
+
+        if(dados.foto() != null){
+            foto = dados.foto();
+        }
+
+        if(dados.telefone() != null){
+            telefone = dados.telefone();
+        }
+
+        if(dados.sobre() != null){
+            sobre = dados.sobre();
+        }
+
+        usuario.atualiza(dados);
+    }
 }

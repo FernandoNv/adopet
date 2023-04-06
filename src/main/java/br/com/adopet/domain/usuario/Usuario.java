@@ -1,5 +1,6 @@
 package br.com.adopet.domain.usuario;
 
+import br.com.adopet.domain.tutor.DadosAtualizacaoTutor;
 import br.com.adopet.domain.tutor.Tutor;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -42,5 +43,11 @@ public class Usuario {
 
     public void deletar() {
         ativo = false;
+    }
+
+    public void atualiza(DadosAtualizacaoTutor dados) {
+        if(dados.email() != null){
+            email = dados.email();
+        }
     }
 }
